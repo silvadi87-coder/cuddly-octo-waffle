@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>QG de Segurança</title>
+    <style>
+        body { font-family: monospace; background: #0a0f0d; color: #33ff33; padding: 20px; }
+        .painel { max-width: 500px; margin: auto; background: #111a16; border: 2px solid #33ff33; padding: 20px; }
+        #terminal { background: #050806; border: 1px solid #1f4d1f; height: 250px; padding: 10px; overflow-y: auto; margin-bottom: 15px; }
+        .linha { margin: 5px 0; }
+        .input-area { display: flex; gap: 10px; }
+        #txt { flex: 1; background: #050806; border: 1px solid #33ff33; color: #33ff33; padding: 10px; outline: none; }
+        .btn-send { background: #33ff33; color: #000; border: none; padding: 0 20px; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <div class="painel">
+        <h2 style="text-align:center;margin-top:0;">[ PAINEL DE CONTROLE ]</h2>
+
+        <div id="terminal">
+            <div>&gt; SISTEMA ONLINE. DIGITE SUA EMERGÊNCIA ABAIXO.</div>
+        </div>
+
+        <form class="input-area" action="javascript:void(0);" onsubmit="enviarMsg()">
+            <input type="text" id="txt" placeholder="Digite detalhadamente o que está acontecendo..." required autocomplete="off">
+            <button type="submit" class="btn-send">ENTER</button>
+        </form>
+    </div>
+
+    <script>
+        function enviarMsg() {
+            const input = document.getElementById('txt');
+            const term = document.getElementById('terminal');
+            const t = input.value.trim().toLowerCase();
+
+            term.innerHTML += `<div style="color:#888;">&gt; Você: "${input.value}"</div>`;
+
+            let titulo = "🤖 ANÁLISE:", como = "Mantenha a calma.", onde = "Procure abrigo seguro.", porque = "Evite riscos.";
+
+            // SITUAÇÃO CRÍTICA: INVASÃO DE DOMICÍLIO / LADRÃO NA CASA
+            // Analisa se há contexto de invasão combinando o local (casa/quarto/porta) com a ameaça (ladrão/homem/entrou/escutando)
+            if (
+                t.includes("ladrao") || t.includes("ladrão") || t.includes("assalto") || t.includes("roubo") ||
+                ((t.includes("casa") || t.includes("quarto") || t.includes("porta") || t.includes("janela") || t.includes("quintal")) && 
+                 (t.includes("entrou") || t.includes("escutando") || t.includes("barulho") || t.includes("tem alguém") || t.includes("tem alguem") || t.includes("homem") || t.includes("mexendo")))
+            ) {
+                titulo = "🚨🚨 ALERTA MÁXIMO: INVASÃO DE DOMICÍLIO EM ANDAMENTO";
+                como = "MUTE O CELULAR IMEDIATAMENTE. NÃO FAÇA BARULHO. Se puder, mande mensagem de texto para um parente ligar para a polícia (190) informando seu endereço exato.";
+                onde = "Tranque-se no cômodo mais seguro (como o banheiro), apague as luzes, deite no chão atrás de um móvel pesado e fique em silêncio absoluto.";
+                porque = "O confronto direto com um invasor em ambiente escuro aumenta drasticamente o risco de violência física. O silêncio e o ocultamento salvam vidas.";
+            }
+            // OUTROS CASOS (SÓ VÃO RODAR SE NÃO FOR UMA INVASÃO)
+            else if (t.includes("tiro") || t.includes("baleado") || t.includes("arma")) {
+                titulo = "🚨 ALERTA: ARMA DE FOGO";
+                como = "Pressione um pano limpo no ferimento para estancar o sangue. Ligue 192/190.";
+                onde = "Deite no chão e esconda-se atrás de paredes grossas.";
+                porque = "Movimentar-se te expõe ao atirador. Controlar o sangue salva sua vida.";
+            } 
+            else if (t.includes("gas") || t.includes("gás") || t.includes("vazamento")) {
+                titulo = "💨 ALERTA: VAZAMENTO DE GÁS";
+                como = "Abra portas e janelas. NÃO acenda luzes ou celular. Ligue 193 na rua.";
+                onde = "Saia imediatamente do ambiente fechado e vá para uma área aberta.";
+                porque = "Uma única faísca elétrica ou de celular pode causar uma explosão.";
+            }
+            else if (t.includes("queimadura") || t.includes("queimei")) {
+                titulo = "🩺 SAÚDE: QUEIMADURAS";
+                como = "Coloque a área queimada debaixo de água fria corrente por 15 minutos. Não passe pomada.";
+                onde = "Faça isso na pia ou no chuveiro imediatamente.";
+                porque = "A água fria resfria a pele e para a destruição do tecido.";
+            }
+            else if (t.includes("febre") || t.includes("doente") || t.includes("inflama")) {
+                titulo = "🩺 SAÚDE: SINTOMAS GERAIS";
+                como = "Tome bastante água, descanse e faça compressas frias se a febre passar de 38°C.";
+                onde = "Fique em repouso em casa ou procure um posto de saúde.";
+                porque = "A hidratação ajuda o corpo a combater infecções mais rápido.";
+            }
+
+            term.innerHTML += `
+                <div style="margin-top:10px;border-top:1px dashed #ff3333;padding-top:5px;background:#1a0505;">
+                    <b style="color:#ff3333;">${titulo}</b><br>
+                    <div class="linha"><b style="color:#fff;">COMO AGIR:</b> ${como}</div>
+                    <div class="linha"><b style="color:#fff;">ONDE IR:</b> ${onde}</div>
+                    <div class="linha"><b style="color:#fff;">POR QUE:</b> ${porque}</div>
+                </div>`;
+
+            input.value = "";
+            term.scrollTop = term.scrollHeight;
+        }
+    </script>
+
+</body>
+</html>
